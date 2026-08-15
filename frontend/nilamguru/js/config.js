@@ -5,7 +5,7 @@
    ========================================================================== */
 
 // 👉 Change this to your deployed FastAPI URL when you go live.
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "https://nilamguru.onrender.com";
 
 // ---------------------------------------------------------------------------
 // REAL backend endpoints (confirmed against the FastAPI code you provided).

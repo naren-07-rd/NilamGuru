@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Log in — NilamGuru</title>
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/components.css" />
+<link rel="stylesheet" href="../css/pages.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body>
+<div class="auth-shell">
+    <div class="auth-card">
+        <div class="auth-brand"><span class="leaf">🌱</span> NilamGuru</div>
+        <h2 class="auth-title text-center">Welcome back</h2>
+        <p class="auth-sub">Log in to continue to your dashboard</p>
+
+        <form id="login-form" novalidate>
+            <div class="form-group">
+                <label class="form-label" for="identifier">Email or Phone</label>
+                <input class="form-control" type="text" id="identifier" placeholder="you@example.com or 9876543210" autocomplete="username" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <div class="input-with-icon">
+                    <input class="form-control" type="password" id="password" placeholder="Enter your password" autocomplete="current-password" />
+                    <button type="button" class="icon-btn" id="toggle-password" aria-label="Show password">👁️</button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="login-btn">Login</button>
+        </form>
+
+        <div class="auth-divider">or</div>
+        <button class="btn btn-secondary btn-block" id="google-login">🔵 Login with Google</button>
+
+        <p class="text-center" style="margin-top:16px">
+            <a href="forgot-password.html">Forgot Password?</a>
+        </p>
+        <p class="auth-footer">Don't have an account? <a href="register.html">Register</a></p>
+
+        <div class="demo-note">
+            ℹ️ Authentication is currently <strong>demo mode</strong> (localStorage) — the FastAPI backend
+            doesn't have auth endpoints yet. Register first, then log in with the same details.
+        </div>
+    </div>
+</div>
+
+<script src="../js/config.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/validation.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+    document.getElementById("toggle-password").addEventListener("click", (e) => {
+        const input = document.getElementById("password");
+        const showing = input.type === "text";
+        input.type = showing ? "password" : "text";
+        e.target.textContent = showing ? "👁️" : "🙈";
+    });
+
+    document.getElementById("google-login").addEventListener("click", () => {
+        showToast("Google login requires backend OAuth setup — not available yet.", "info");
+    });
+
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const identifierEl = document.getElementById("identifier");
+        const passwordEl = document.getElementById("password");
+
+        const valid = validateForm([
+            { el: identifierEl, rules: [[isRequired, "Email or phone is required."], [isEmailOrPhone, "Enter a valid email or 10-digit phone."]] },
+            { el: passwordEl, rules: [[isRequired, "Password is required."]] }
+        ]);
+        if (!valid) return;
+
+        const btn = document.getElementById("login-btn");
+        setButtonLoading(btn, "Logging in...");
+        try {
+            const { user } = await loginUser({ identifier: identifierEl.value.trim(), password: passwordEl.value });
+            saveSession(user);
+            showToast("Login successful!", "success");
+            setTimeout(() => {
+                if (!user.role) {
+                    window.location.href = "role-selection.html";
+                } else if (user.role === "vanigar") {
+                    window.location.href = "vanigar/dashboard.html";
+                } else {
+                    window.location.href = "uzhavali/home.html";
+                }
+            }, 500);
+        } catch (err) {
+            showToast(err.message, "error");
+        } finally {
+            resetButton(btn);
+        }
+    });
+</script>
+</body>
+</html>

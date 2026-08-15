@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Verify OTP — NilamGuru</title>
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/components.css" />
+<link rel="stylesheet" href="../css/pages.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body>
+<div class="auth-shell">
+    <div class="auth-card">
+        <div class="auth-brand"><span class="leaf">🌱</span> NilamGuru</div>
+        <h2 class="auth-title text-center">Verify your number</h2>
+        <p class="auth-sub">Enter the 4-digit code we sent you</p>
+
+        <div class="otp-row">
+            <input class="otp-box" maxlength="1" inputmode="numeric" />
+            <input class="otp-box" maxlength="1" inputmode="numeric" />
+            <input class="otp-box" maxlength="1" inputmode="numeric" />
+            <input class="otp-box" maxlength="1" inputmode="numeric" />
+        </div>
+
+        <button class="btn btn-primary btn-block" id="verify-btn">Verify</button>
+
+        <p class="resend-row" style="margin-top:16px">Didn't get a code? <a href="#" id="resend-link">Resend</a></p>
+
+        <div class="demo-note">
+            ℹ️ OTP is <strong>demo mode</strong> — enter any 4 digits (e.g. 1234) to continue.
+        </div>
+    </div>
+</div>
+
+<script src="../js/config.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+    const boxes = Array.from(document.querySelectorAll(".otp-box"));
+    boxes.forEach((box, i) => {
+        box.addEventListener("input", () => {
+            box.value = box.value.replace(/\D/g, "");
+            if (box.value && boxes[i + 1]) boxes[i + 1].focus();
+        });
+        box.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace" && !box.value && boxes[i - 1]) boxes[i - 1].focus();
+        });
+    });
+
+    document.getElementById("resend-link").addEventListener("click", (e) => {
+        e.preventDefault();
+        showToast("A new code has been sent (demo).", "info");
+    });
+
+    document.getElementById("verify-btn").addEventListener("click", async () => {
+        const code = boxes.map((b) => b.value).join("");
+        const btn = document.getElementById("verify-btn");
+        setButtonLoading(btn, "Verifying...");
+        try {
+            await verifyOTP(code);
+            showToast("Verified!", "success");
+            setTimeout(() => (window.location.href = isLoggedIn() ? "role-selection.html" : "login.html"), 500);
+        } catch (err) {
+            showToast(err.message, "error");
+        } finally {
+            resetButton(btn);
+        }
+    });
+</script>
+</body>
+</html>

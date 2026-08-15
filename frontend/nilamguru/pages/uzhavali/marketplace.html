@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marketplace — NilamGuru</title>
+<link rel="stylesheet" href="../../css/style.css" />
+<link rel="stylesheet" href="../../css/components.css" />
+<link rel="stylesheet" href="../../css/pages.css" />
+<link rel="stylesheet" href="../../css/responsive.css" />
+</head>
+<body data-role="uzhavali" data-page="marketplace">
+
+<div id="app-header"></div>
+<div class="app-shell">
+    <nav id="app-sidebar"></nav>
+    <main class="app-main">
+        <div class="app-content">
+
+            <h2>🛒 Agricultural Marketplace</h2>
+            <div class="pending-banner">⚠️ Backend integration pending — showing demo listings until marketplace APIs exist.</div>
+
+            <div class="marketplace-toolbar">
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" id="search-input" placeholder="Search seeds, fertilizers, equipment..." />
+                </div>
+                <div class="chip-row" id="filter-chips">
+                    <button class="chip active" data-cat="all">All</button>
+                </div>
+            </div>
+
+            <div class="product-grid" id="product-grid">
+                <div class="loading-block" style="grid-column:1/-1"><span class="loading-spinner dark"></span></div>
+            </div>
+
+        </div>
+    </main>
+</div>
+<div id="app-bottomnav"></div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/uzhavali/marketplace.js"></script>
+</body>
+</html>

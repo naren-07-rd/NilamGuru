@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard — NilamGuru</title>
+<link rel="stylesheet" href="../../css/style.css" />
+<link rel="stylesheet" href="../../css/components.css" />
+<link rel="stylesheet" href="../../css/pages.css" />
+<link rel="stylesheet" href="../../css/responsive.css" />
+</head>
+<body data-role="vanigar" data-page="dashboard">
+
+<div id="app-header"></div>
+<div class="app-shell">
+    <nav id="app-sidebar"></nav>
+    <main class="app-main">
+        <div class="app-content">
+
+            <div class="greeting-banner">
+                <div>
+                    <h2 id="greeting-text">Welcome back,</h2>
+                    <p>Here's how your shop is doing today</p>
+                </div>
+                <span style="font-size:2.4rem">🏪</span>
+            </div>
+
+            <div class="stat-grid">
+                <div class="card stat-card"><div class="stat-value" id="stat-total">—</div><div class="stat-label">Total Listings</div></div>
+                <div class="card stat-card"><div class="stat-value" id="stat-active">—</div><div class="stat-label">Active Listings</div></div>
+                <div class="card stat-card"><div class="stat-value" id="stat-enquiries">—</div><div class="stat-label">Enquiries</div></div>
+                <div class="card stat-card"><div class="stat-value" id="stat-sales">—</div><div class="stat-label">Sales</div></div>
+            </div>
+
+            <h3>Quick Actions</h3>
+            <div class="quick-actions">
+                <a href="add-listing.html" class="quick-action"><span class="icon">➕</span> Add Listing</a>
+                <a href="listings.html" class="quick-action"><span class="icon">📦</span> My Listings</a>
+                <a href="enquiries.html" class="quick-action"><span class="icon">📩</span> Enquiries</a>
+            </div>
+
+            <h3>Recent Listings</h3>
+            <div class="product-grid" id="recent-listings"></div>
+
+        </div>
+    </main>
+</div>
+<div id="app-bottomnav"></div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/vanigar/dashboard.js"></script>
+</body>
+</html>

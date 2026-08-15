@@ -1,0 +1,183 @@
+/* ==========================================================================
+   NILAMGURU — style.css
+   Global design tokens, reset, typography
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Brand palette (do not change) */
+    --primary-green: #2E7D32;
+    --primary-green-dark: #245f28;
+    --fresh-green: #66BB6A;
+    --dark-green: #163A24;
+    --ai-blue: #4D96FF;
+    --harvest-yellow: #F9C74F;
+    --marketplace-orange: #F4A261;
+    --background: #F7FAF5;
+    --white: #FFFFFF;
+    --text: #243424;
+
+    /* Derived tones */
+    --text-muted: #5B6E5D;
+    --text-faint: #8AA08C;
+    --border: #E2ECE1;
+    --border-strong: #CFE0CD;
+    --danger: #E5484D;
+    --danger-bg: #FDECEC;
+    --success-bg: #EAF7EC;
+
+    /* Surfaces */
+    --surface: var(--white);
+    --surface-alt: #F1F7EF;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(22, 58, 36, 0.06);
+    --shadow-md: 0 6px 20px rgba(22, 58, 36, 0.08);
+    --shadow-lg: 0 16px 40px rgba(22, 58, 36, 0.14);
+
+    /* Radius */
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+
+    /* Type */
+    --font-display: 'Poppins', 'Inter', sans-serif;
+    --font-body: 'Inter', 'Poppins', sans-serif;
+
+    /* Layout */
+    --header-h: 72px;
+    --sidebar-w: 260px;
+    --bottomnav-h: 68px;
+    --max-content: 1320px;
+
+    /* Motion */
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --fast: 150ms;
+    --med: 260ms;
+}
+
+* , *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--dark-green);
+    margin: 0 0 0.5em 0;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+h1 { font-size: clamp(1.9rem, 1.5rem + 1.6vw, 3.2rem); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2.2rem); letter-spacing: -0.01em; }
+h3 { font-size: 1.35rem; }
+h4 { font-size: 1.1rem; }
+
+p { margin: 0 0 1em 0; color: var(--text); }
+
+a { color: var(--primary-green); text-decoration: none; }
+a:hover { color: var(--primary-green-dark); }
+
+ul, ol { padding-left: 1.2em; }
+
+img { max-width: 100%; display: block; }
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    color: inherit;
+}
+
+button { cursor: pointer; }
+
+/* Focus visibility for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid var(--ai-blue);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+/* Utility layout */
+.container {
+    width: 100%;
+    max-width: var(--max-content);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.text-muted { color: var(--text-muted); }
+.text-center { text-align: center; }
+.hidden { display: none !important; }
+.visually-hidden {
+    position: absolute; width: 1px; height: 1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.section {
+    padding: 64px 0;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--primary-green);
+    background: var(--surface-alt);
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    margin-bottom: 16px;
+}
+
+/* App shell (dashboard pages) */
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.app-main {
+    flex: 1;
+    min-width: 0;
+    padding-bottom: calc(var(--bottomnav-h) + 24px);
+}
+
+.app-content {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+    .app-main { padding-bottom: 24px; }
+    .app-content { padding: 32px 40px; }
+}
+
+/* Scrollbar (subtle) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; }
+::-webkit-scrollbar-track { background: transparent; }

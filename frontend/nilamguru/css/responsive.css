@@ -1,0 +1,73 @@
+/* ==========================================================================
+   NILAMGURU — responsive.css
+   Breakpoints: 375 / 390 / 414 / 768 / 1024 / 1280 / 1440 / 1920
+   Mobile-first base styles live in style.css/components.css/pages.css.
+   This file layers intentional adjustments per breakpoint.
+   ========================================================================== */
+
+/* ---- Small phones (<=390px): tighten spacing ---- */
+@media (max-width: 390px) {
+    .container { padding: 0 14px; }
+    .hero { padding: 40px 0 28px; }
+    .auth-card { padding: 28px 20px; }
+    .otp-box { width: 42px; height: 50px; font-size: 1.2rem; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .quick-actions { grid-template-columns: repeat(2, 1fr); }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+}
+
+/* ---- Large phones (414px) ---- */
+@media (min-width: 414px) and (max-width: 767px) {
+    .hero-title { font-size: 2.1rem; }
+}
+
+/* ---- Tablet (768px) ---- */
+@media (min-width: 768px) {
+    .app-content { padding: 28px; }
+    .hero { padding: 72px 0 56px; }
+    .role-grid { grid-template-columns: 1fr 1fr; }
+    .product-grid { grid-template-columns: repeat(3, 1fr); }
+    .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
+}
+
+/* ---- Small laptop / desktop (1024px): sidebar layout kicks in ---- */
+@media (min-width: 1024px) {
+    .app-header { padding: 0 32px; }
+    .bottom-nav { display: none; }
+    .app-sidebar { display: flex; }
+    .app-main { margin-left: 0; }
+    .app-shell { align-items: stretch; }
+    .hero-grid { grid-template-columns: 1.1fr 0.9fr; }
+    .product-grid { grid-template-columns: repeat(4, 1fr); }
+    .data-table-wrap { display: block; }
+    .list-cards { display: none; }
+}
+
+/* ---- Desktop (1280px) ---- */
+@media (min-width: 1280px) {
+    .container { padding: 0 32px; }
+    .app-content { max-width: 1240px; }
+}
+
+/* ---- Large desktop (1440px) ---- */
+@media (min-width: 1440px) {
+    :root { --sidebar-w: 280px; }
+    .app-content { max-width: 1320px; }
+    .hero-visual { min-height: 380px; }
+}
+
+/* ---- Extra wide (1920px) ---- */
+@media (min-width: 1920px) {
+    .container { max-width: 1600px; }
+    .app-content { max-width: 1500px; }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Choose your role — NilamGuru</title>
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/components.css" />
+<link rel="stylesheet" href="../css/pages.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body>
+<div class="auth-shell">
+    <div class="auth-card" style="max-width:560px">
+        <div class="auth-brand"><span class="leaf">🌱</span> NilamGuru</div>
+        <h2 class="auth-title text-center">Who are you?</h2>
+        <p class="auth-sub">Choose how you'll use NilamGuru — you can't switch later without contacting support.</p>
+
+        <div class="role-grid">
+            <button class="role-card" id="role-uzhavali" type="button">
+                <span class="role-emoji">👨‍🌾</span>
+                <h3 style="margin-bottom:0">Uzhavali</h3>
+                <p class="text-muted" style="margin:0">Farmer</p>
+            </button>
+            <button class="role-card" id="role-vanigar" type="button">
+                <span class="role-emoji">🏪</span>
+                <h3 style="margin-bottom:0">Vanigar</h3>
+                <p class="text-muted" style="margin:0">Seller / Trader</p>
+            </button>
+        </div>
+
+        <button class="btn btn-primary btn-block" id="continue-btn" disabled>Continue</button>
+    </div>
+</div>
+
+<script src="../js/config.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+    // Must be logged in (even in demo mode) to select a role.
+    if (!isLoggedIn()) window.location.href = "login.html";
+
+    let selectedRole = null;
+    const cards = { uzhavali: document.getElementById("role-uzhavali"), vanigar: document.getElementById("role-vanigar") };
+    const continueBtn = document.getElementById("continue-btn");
+
+    Object.entries(cards).forEach(([role, card]) => {
+        card.addEventListener("click", () => {
+            selectedRole = role;
+            Object.values(cards).forEach((c) => c.classList.remove("selected"));
+            card.classList.add("selected");
+            continueBtn.disabled = false;
+        });
+    });
+
+    continueBtn.addEventListener("click", () => {
+        if (!selectedRole) return;
+        setUserRole(selectedRole);
+        showToast(`Welcome, ${selectedRole === "vanigar" ? "Vanigar" : "Uzhavali"}!`, "success");
+        setTimeout(() => {
+            window.location.href = selectedRole === "vanigar" ? "vanigar/dashboard.html" : "uzhavali/home.html";
+        }, 400);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fertilizer Recommendation — NilamGuru</title>
+<link rel="stylesheet" href="../../css/style.css" />
+<link rel="stylesheet" href="../../css/components.css" />
+<link rel="stylesheet" href="../../css/pages.css" />
+<link rel="stylesheet" href="../../css/responsive.css" />
+</head>
+<body data-role="uzhavali" data-page="home">
+
+<div id="app-header"></div>
+<div class="app-shell">
+    <nav id="app-sidebar"></nav>
+    <main class="app-main">
+        <div class="app-content">
+
+            <div class="ml-page-header">
+                <h2>🧪 Fertilizer Recommendation</h2>
+                <p class="text-muted">Enter your soil and crop conditions for the right fertilizer.</p>
+            </div>
+
+            <div class="ml-form-wrap" id="form-view">
+                <form id="fert-form" class="card" novalidate>
+                    <div class="ml-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="temperature">Temperature (°C)</label>
+                            <input class="form-control" type="number" id="temperature" step="any" placeholder="e.g. 28" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="humidity">Humidity (%)</label>
+                            <input class="form-control" type="number" id="humidity" step="any" placeholder="e.g. 60" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="moisture">Moisture (%)</label>
+                            <input class="form-control" type="number" id="moisture" step="any" placeholder="e.g. 40" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="soil_type">Soil Type</label>
+                            <select class="form-control" id="soil_type"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="crop_type">Crop Type</label>
+                            <select class="form-control" id="crop_type"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="nitrogen">Nitrogen</label>
+                            <input class="form-control" type="number" id="nitrogen" step="any" placeholder="e.g. 12" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="potassium">Potassium</label>
+                            <input class="form-control" type="number" id="potassium" step="any" placeholder="e.g. 10" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="phosphorous">Phosphorous</label>
+                            <input class="form-control" type="number" id="phosphorous" step="any" placeholder="e.g. 8" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="predict-btn" style="margin-top:8px">🧪 Recommend Fertilizer</button>
+                </form>
+            </div>
+
+            <div class="result-card card hidden" id="result-view">
+                <div class="result-icon">🧪</div>
+                <div class="result-label">Recommended Fertilizer</div>
+                <div class="result-value" id="result-fert">—</div>
+                <div class="result-why">
+                    <div class="result-why-title">Why this fertilizer?</div>
+                    <p id="result-why-text">The model explanation will appear here.</p>
+                </div>
+                <button class="btn btn-secondary btn-block" id="new-prediction-btn">Try Again</button>
+            </div>
+
+        </div>
+    </main>
+</div>
+<div id="app-bottomnav"></div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/uzhavali/fertilizer.js"></script>
+</body>
+</html>

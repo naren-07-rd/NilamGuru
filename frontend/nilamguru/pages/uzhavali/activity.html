@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Activity — NilamGuru</title>
+<link rel="stylesheet" href="../../css/style.css" />
+<link rel="stylesheet" href="../../css/components.css" />
+<link rel="stylesheet" href="../../css/pages.css" />
+<link rel="stylesheet" href="../../css/responsive.css" />
+</head>
+<body data-role="uzhavali" data-page="activity">
+
+<div id="app-header"></div>
+<div class="app-shell">
+    <nav id="app-sidebar"></nav>
+    <main class="app-main">
+        <div class="app-content">
+            <h2>📋 Your Activity</h2>
+            <p class="text-muted">Crop predictions and fertilizer predictions are logged on this device. Enquiries are demo data pending backend.</p>
+
+            <h3>Recent Crop Predictions</h3>
+            <div class="timeline" id="crop-timeline" style="margin-bottom:32px"></div>
+
+            <h3>Recent Fertilizer Predictions</h3>
+            <div class="timeline" id="fert-timeline" style="margin-bottom:32px"></div>
+
+            <h3>Marketplace Enquiries</h3>
+            <div class="timeline" id="enquiry-timeline"></div>
+        </div>
+    </main>
+</div>
+<div id="app-bottomnav"></div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/uzhavali/activity.js"></script>
+</body>
+</html>

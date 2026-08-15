@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Crop Recommendation — NilamGuru</title>
+<link rel="stylesheet" href="../../css/style.css" />
+<link rel="stylesheet" href="../../css/components.css" />
+<link rel="stylesheet" href="../../css/pages.css" />
+<link rel="stylesheet" href="../../css/responsive.css" />
+</head>
+<body data-role="uzhavali" data-page="home">
+
+<div id="app-header"></div>
+<div class="app-shell">
+    <nav id="app-sidebar"></nav>
+    <main class="app-main">
+        <div class="app-content">
+
+            <div class="ml-page-header">
+                <h2>🌾 Crop Recommendation</h2>
+                <p class="text-muted">Enter your farm conditions to discover the most suitable crop.</p>
+            </div>
+
+            <!-- Form view -->
+            <div class="ml-form-wrap" id="form-view">
+                <form id="crop-form" class="card" novalidate>
+                    <div class="ml-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="N">Nitrogen (N)</label>
+                            <input class="form-control" type="number" id="N" step="any" placeholder="e.g. 90" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="P">Phosphorus (P)</label>
+                            <input class="form-control" type="number" id="P" step="any" placeholder="e.g. 42" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="K">Potassium (K)</label>
+                            <input class="form-control" type="number" id="K" step="any" placeholder="e.g. 43" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="temperature">Temperature (°C)</label>
+                            <input class="form-control" type="number" id="temperature" step="any" placeholder="e.g. 25.5" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="humidity">Humidity (%)</label>
+                            <input class="form-control" type="number" id="humidity" step="any" placeholder="e.g. 82" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="ph">Soil pH</label>
+                            <input class="form-control" type="number" id="ph" step="any" placeholder="e.g. 6.5" />
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1">
+                            <label class="form-label" for="rainfall">Rainfall (mm)</label>
+                            <input class="form-control" type="number" id="rainfall" step="any" placeholder="e.g. 200" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" id="predict-btn" style="margin-top:8px">🌱 Predict Crop</button>
+                </form>
+            </div>
+
+            <!-- Result view -->
+            <div class="result-card card hidden" id="result-view">
+                <div class="result-icon">🌾</div>
+                <div class="result-label">Recommended Crop</div>
+                <div class="result-value" id="result-crop">—</div>
+                <div class="result-why">
+                    <div class="result-why-title">Why this crop?</div>
+                    <p id="result-why-text">The model explanation will appear here.</p>
+                </div>
+                <button class="btn btn-secondary btn-block" id="new-prediction-btn">New Prediction</button>
+            </div>
+
+        </div>
+    </main>
+</div>
+<div id="app-bottomnav"></div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/uzhavali/crop.js"></script>
+</body>
+</html>

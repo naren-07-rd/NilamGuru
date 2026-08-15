@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Enquiries — NilamGuru</title>
+<link rel="stylesheet" href="../../css/style.css" />
+<link rel="stylesheet" href="../../css/components.css" />
+<link rel="stylesheet" href="../../css/pages.css" />
+<link rel="stylesheet" href="../../css/responsive.css" />
+</head>
+<body data-role="vanigar" data-page="enquiries">
+
+<div id="app-header"></div>
+<div class="app-shell">
+    <nav id="app-sidebar"></nav>
+    <main class="app-main">
+        <div class="app-content">
+            <h2>📩 Enquiries</h2>
+            <div class="pending-banner">⚠️ Backend integration pending — enquiries are stored locally until enquiry APIs exist.</div>
+
+            <div class="chip-row" id="tab-row" style="margin-bottom:18px">
+                <button class="chip active" data-tab="all">All</button>
+                <button class="chip" data-tab="new">New</button>
+                <button class="chip" data-tab="contacted">Contacted</button>
+                <button class="chip" data-tab="closed">Closed</button>
+            </div>
+
+            <div id="enquiries-list"></div>
+        </div>
+    </main>
+</div>
+<div id="app-bottomnav"></div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/vanigar/enquiries.js"></script>
+</body>
+</html>

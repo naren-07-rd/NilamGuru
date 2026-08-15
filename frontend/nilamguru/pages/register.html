@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Register — NilamGuru</title>
+<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../css/components.css" />
+<link rel="stylesheet" href="../css/pages.css" />
+<link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body>
+<div class="auth-shell">
+    <div class="auth-card">
+        <div class="auth-brand"><span class="leaf">🌱</span> NilamGuru</div>
+        <h2 class="auth-title text-center">Create your account</h2>
+        <p class="auth-sub">Join NilamGuru as a farmer or trader</p>
+
+        <form id="register-form" novalidate>
+            <div class="form-group">
+                <label class="form-label" for="name">Full Name</label>
+                <input class="form-control" type="text" id="name" placeholder="Your full name" autocomplete="name" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="identifier">Email or Phone</label>
+                <input class="form-control" type="text" id="identifier" placeholder="you@example.com or 9876543210" autocomplete="username" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input class="form-control" type="password" id="password" placeholder="At least 6 characters" autocomplete="new-password" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="confirm-password">Confirm Password</label>
+                <input class="form-control" type="password" id="confirm-password" placeholder="Re-enter your password" autocomplete="new-password" />
+            </div>
+            <div class="form-group">
+                <label class="checkbox-row">
+                    <input type="checkbox" id="terms" />
+                    <span>I agree to the Terms &amp; Conditions and Privacy Policy</span>
+                </label>
+                <div class="field-error" id="terms-error"></div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="register-btn">Register</button>
+        </form>
+
+        <p class="auth-footer">Already have an account? <a href="login.html">Log in</a></p>
+
+        <div class="demo-note">
+            ℹ️ Authentication is currently <strong>demo mode</strong> (localStorage) — no real backend account is created yet.
+        </div>
+    </div>
+</div>
+
+<script src="../js/config.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/validation.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+<script>
+    document.getElementById("register-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const nameEl = document.getElementById("name");
+        const identifierEl = document.getElementById("identifier");
+        const passwordEl = document.getElementById("password");
+        const confirmEl = document.getElementById("confirm-password");
+        const termsEl = document.getElementById("terms");
+        const termsError = document.getElementById("terms-error");
+
+        const valid = validateForm([
+            { el: nameEl, rules: [[isRequired, "Full name is required."]] },
+            { el: identifierEl, rules: [[isRequired, "Email or phone is required."], [isEmailOrPhone, "Enter a valid email or 10-digit phone."]] },
+            { el: passwordEl, rules: [[isRequired, "Password is required."], [(v) => v.length >= 6, "Password must be at least 6 characters."]] },
+            { el: confirmEl, rules: [[isRequired, "Please confirm your password."], [(v) => v === passwordEl.value, "Passwords do not match."]] }
+        ]);
+
+        termsError.classList.remove("show");
+        let termsOk = true;
+        if (!termsEl.checked) {
+            termsError.textContent = "Please accept the Terms & Conditions.";
+            termsError.classList.add("show");
+            termsOk = false;
+        }
+        if (!valid || !termsOk) return;
+
+        const btn = document.getElementById("register-btn");
+        setButtonLoading(btn, "Creating account...");
+        try {
+            const { user } = await registerUser({
+                name: nameEl.value.trim(),
+                identifier: identifierEl.value.trim(),
+                password: passwordEl.value,
+                role: null
+            });
+            saveSession(user);
+            showToast("Account created!", "success");
+            setTimeout(() => (window.location.href = "role-selection.html"), 500);
+        } catch (err) {
+            showToast(err.message, "error");
+        } finally {
+            resetButton(btn);
+        }
+    });
+</script>
+</body>
+</html>

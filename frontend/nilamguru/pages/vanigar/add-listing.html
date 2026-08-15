@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Add Listing — NilamGuru</title>
+<link rel="stylesheet" href="../../css/style.css" />
+<link rel="stylesheet" href="../../css/components.css" />
+<link rel="stylesheet" href="../../css/pages.css" />
+<link rel="stylesheet" href="../../css/responsive.css" />
+</head>
+<body data-role="vanigar" data-page="listings">
+
+<div id="app-header"></div>
+<div class="app-shell">
+    <nav id="app-sidebar"></nav>
+    <main class="app-main">
+        <div class="app-content" style="max-width:640px">
+            <h2>➕ Add Listing</h2>
+            <div class="pending-banner">⚠️ Backend integration pending — listings are saved locally until listing APIs exist.</div>
+
+            <form id="listing-form" class="card" novalidate>
+                <div class="form-group">
+                    <label class="form-label">Product Image <span class="optional">(optional in demo)</span></label>
+                    <label class="image-upload-box" for="image-input" id="upload-box">
+                        📷 Click to choose an image
+                        <input type="file" id="image-input" accept="image/*" class="hidden" />
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="name">Product Name</label>
+                    <input class="form-control" type="text" id="name" placeholder="e.g. Organic Urea 50kg" />
+                </div>
+                <div class="ml-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="category">Category</label>
+                        <select class="form-control" id="category"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="unit">Unit</label>
+                        <input class="form-control" type="text" id="unit" placeholder="e.g. kg, bag, unit" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="price">Price (₹)</label>
+                        <input class="form-control" type="number" id="price" min="0" placeholder="e.g. 500" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="stock">Stock Quantity</label>
+                        <input class="form-control" type="number" id="stock" min="0" placeholder="e.g. 100" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" id="description" rows="4" placeholder="Describe the product..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" id="publish-btn">Publish Listing</button>
+            </form>
+        </div>
+    </main>
+</div>
+<div id="app-bottomnav"></div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/vanigar/add-listing.js"></script>
+</body>
+</html>

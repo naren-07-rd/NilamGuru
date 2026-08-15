@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Edit Profile — NilamGuru</title>
+<link rel="stylesheet" href="../../css/style.css" />
+<link rel="stylesheet" href="../../css/components.css" />
+<link rel="stylesheet" href="../../css/pages.css" />
+<link rel="stylesheet" href="../../css/responsive.css" />
+</head>
+<body data-role="vanigar" data-page="profile">
+
+<div id="app-header"></div>
+<div class="app-shell">
+    <nav id="app-sidebar"></nav>
+    <main class="app-main">
+        <div class="app-content" style="max-width:560px">
+            <h2>Edit Profile</h2>
+            <form id="edit-form" class="card" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="ownerName">Owner Name</label>
+                    <input class="form-control" type="text" id="ownerName" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="businessName">Business Name</label>
+                    <input class="form-control" type="text" id="businessName" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="phone">Phone</label>
+                    <input class="form-control" type="text" id="phone" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" type="email" id="email" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="bankDetails">Bank Details</label>
+                    <input class="form-control" type="text" id="bankDetails" placeholder="Account number — bank name" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" id="save-btn">Save Changes</button>
+            </form>
+        </div>
+    </main>
+</div>
+<div id="app-bottomnav"></div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/validation.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/vanigar/edit-profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Enquiries — NilamGuru</title>
+<link rel="stylesheet" href="../../css/style.css" />
+<link rel="stylesheet" href="../../css/components.css" />
+<link rel="stylesheet" href="../../css/pages.css" />
+<link rel="stylesheet" href="../../css/responsive.css" />
+</head>
+<body data-role="uzhavali" data-page="marketplace">
+
+<div id="app-header"></div>
+<div class="app-shell">
+    <nav id="app-sidebar"></nav>
+    <main class="app-main">
+        <div class="app-content">
+            <h2>📩 My Enquiries</h2>
+            <div class="pending-banner">⚠️ Backend integration pending — enquiries are stored locally on this device until enquiry APIs exist.</div>
+            <div id="enquiry-list"></div>
+        </div>
+    </main>
+</div>
+<div id="app-bottomnav"></div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/navigation.js"></script>
+<script>
+(async function () {
+    await mountAppShell("uzhavali", "marketplace");
+    const list = document.getElementById("enquiry-list");
+    showLoading(list);
+    try {
+        const { enquiries } = await getEnquiries();
+        if (enquiries.length === 0) {
+            renderEmptyState(list, { icon: "📩", title: "No enquiries yet", message: "Enquiries you send from the marketplace will show up here." });
+            return;
+        }
+        list.innerHTML = enquiries.map((e) => `
+            <div class="card" style="margin-bottom:12px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                    <strong>${escapeHtml(e.productName)}</strong>
+                    <span class="pill ${e.status === "closed" ? "pill-muted" : e.status === "contacted" ? "pill-info" : "pill-success"}">${e.status}</span>
+                </div>
+                <p class="text-muted" style="margin:0 0 6px">Qty: ${e.quantity}${e.message ? " · " + escapeHtml(e.message) : ""}</p>
+                <span class="text-muted" style="font-size:0.78rem">${timeAgo(e.date)}</span>
+            </div>
+        `).join("");
+    } catch (err) {
+        renderErrorState(list, err.message);
+    }
+})();
+</script>
+</body>
+</html>

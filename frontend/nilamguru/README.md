@@ -1,241 +1,511 @@
-# 🌱 NilamGuru — Agriculture Web Application
+🌱 NilamGuru
 
-NilamGuru is an agriculture technology platform combining **AI-powered crop &
-fertilizer recommendation** with an **agricultural marketplace**, built for two
-kinds of users:
+Smart Farming • ML-Powered Crop & Fertilizer Recommendation
 
-- 👨‍🌾 **Uzhavali** — Farmer
-- 🏪 **Vanigar** — Seller / Trader
+NilamGuru is a Machine Learning based smart farming web application designed to help farmers make better crop and fertilizer decisions using soil and environmental information.
 
----
+The application combines a responsive frontend with a FastAPI backend and trained Machine Learning models. Farmers can enter soil and environmental parameters and receive ML-powered crop and fertilizer recommendations.
 
-## 1. Technology Stack
+🚀 Live Application
 
-**Frontend:** HTML5, CSS3, Vanilla JavaScript only (no framework, no build step).
-**Backend:** FastAPI (existing, provided by you) + your existing trained ML models.
-**Communication:** Browser `fetch()` → FastAPI → ML models → JSON → UI.
+Frontend: Deployed on Vercel
 
-No React, Vue, Angular, Tailwind, Bootstrap, or any bundler is used anywhere in
-this project, per the project requirements.
+Backend API: https://nilamguru.onrender.com
 
----
+API Documentation: https://nilamguru.onrender.com/docs
 
-## 2. Project Structure
+GitHub Repository: https://github.com/naren-07-rd/NilamGuru
 
-```text
-nilamguru/
-├── index.html                     Landing page + splash intro
-├── pages/
-│   ├── login.html / register.html / role-selection.html
-│   ├── otp.html / forgot-password.html
-│   ├── uzhavali/                  Farmer pages (10 files)
-│   └── vanigar/                   Seller pages (9 files)
-├── css/
-│   ├── style.css                  Design tokens, reset, typography
-│   ├── components.css             Buttons, cards, forms, nav, modal, toast...
-│   ├── pages.css                  Page-specific styling
-│   └── responsive.css             375 / 390 / 414 / 768 / 1024 / 1280 / 1440 / 1920
-├── js/
-│   ├── config.js                  ⭐ Change API_BASE_URL here only
-│   ├── api.js                     All backend calls go through this file
-│   ├── auth.js                    Session handling (demo mode, see below)
-│   ├── navigation.js               Renders shared header/sidebar/bottom-nav
-│   ├── validation.js               Form validation helpers
-│   ├── utils.js                    Toasts, loading states, formatting
-│   ├── uzhavali/                  Farmer page scripts
-│   └── vanigar/                   Seller page scripts
-├── assets/
-│   ├── images/
-│   └── icons/
+The frontend is deployed separately from the backend, while both are maintained in this single GitHub repository.
+
+🎯 Project Objective
+
+Agricultural decisions often depend on soil characteristics, nutrient levels, weather conditions, and crop requirements.
+
+NilamGuru aims to provide a simple digital interface where users can enter these parameters and receive data-driven recommendations.
+
+The main ML capabilities are:
+
+🌾 Crop recommendation
+
+🧪 Fertilizer recommendation
+
+📊 Soil and environmental parameter processing
+
+⚡ Fast API-based ML prediction
+
+🌐 Responsive web interface
+
+✨ Features
+
+🌾 Crop Recommendation
+
+The crop recommendation model accepts:
+
+Nitrogen (N)
+
+Phosphorus (P)
+
+Potassium (K)
+
+Temperature
+
+Humidity
+
+Soil pH
+
+Rainfall
+
+It returns the recommended crop.
+
+🧪 Fertilizer Recommendation
+
+The fertilizer recommendation model accepts:
+
+Temperature
+
+Humidity
+
+Moisture
+
+Soil type
+
+Crop type
+
+Nitrogen
+
+Potassium
+
+Phosphorus
+
+It returns the recommended fertilizer.
+
+🌐 Web Application
+
+The frontend contains multiple sections and role-oriented pages, including:
+
+Home
+
+Authentication UI
+
+Farmer/Uzhavali pages
+
+Seller/Vanigar pages
+
+Crop recommendation
+
+Fertilizer recommendation
+
+Marketplace
+
+Product pages
+
+Enquiries
+
+Notifications
+
+Profile
+
+Activity
+
+Some of these features currently operate in frontend demo mode using browser localStorage and are not yet connected to a persistent backend database.
+
+🏗️ System Architecture
+
+                         ┌──────────────────────┐
+                         │       User           │
+                         │    Web Browser       │
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │   NilamGuru Frontend │
+                         │ HTML / CSS / JS      │
+                         │      Vercel          │
+                         └──────────┬───────────┘
+                                    │
+                         HTTPS API Requests
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │    FastAPI Backend   │
+                         │       Render         │
+                         └──────────┬───────────┘
+                                    │
+                  ┌─────────────────┴─────────────────┐
+                  │                                   │
+                  ▼                                   ▼
+       ┌────────────────────┐             ┌────────────────────┐
+       │ Crop Recommendation│             │ Fertilizer         │
+       │ ML Model           │             │ Recommendation     │
+       │ + Label Encoder    │             │ Model + Encoders   │
+       └────────────────────┘             └────────────────────┘
+
+🧠 Machine Learning
+
+The project contains trained models and encoders for the two current prediction services.
+
+Crop Recommendation
+
+Input
+  ↓
+N, P, K
+Temperature
+Humidity
+pH
+Rainfall
+  ↓
+Crop Recommendation Model
+  ↓
+Label Encoder
+  ↓
+Recommended Crop
+
+Fertilizer Recommendation
+
+Input
+  ↓
+Temperature
+Humidity
+Moisture
+Soil Type
+Crop Type
+N, P, K
+  ↓
+Encoders
+  ↓
+Fertilizer Recommendation Model
+  ↓
+Fertilizer Encoder
+  ↓
+Recommended Fertilizer
+
+🔌 Backend API
+
+The FastAPI backend currently exposes the following real endpoints:
+
+Method
+
+Endpoint
+
+Purpose
+
+GET
+
+/
+
+API health check
+
+POST
+
+/predict/crop
+
+Crop recommendation
+
+POST
+
+/predict/fertilizer
+
+Fertilizer recommendation
+
+Interactive API documentation is available through FastAPI Swagger UI:
+
+https://nilamguru.onrender.com/docs
+
+📁 Project Structure
+
+The repository intentionally keeps the frontend and backend in a single repository.
+
+NilamGuru/
+│
+├── Dataset/
+│   ├── Crop_recommendation.csv
+│   ├── Fertilizer Prediction.csv
+│   └── model
+│
+├── frontend/
+│   └── nilamguru/
+│       ├── .gitignore
+│       ├── README.md
+│       ├── index.html
+│       ├── css/
+│       ├── js/
+│       └── pages/
+│
+├── models/
+│   ├── crop_encoder.pkl
+│   ├── crop_label_encoder.pkl
+│   ├── crop_recommendation_model.pkl
+│   ├── fertilizer_encoder.pkl
+│   ├── fertilizer_model.pkl
+│   └── soil_encoder.pkl
+│
+├── notebook/
+│   ├── crop_prediction.ipynb
+│   └── fertilizer_prediction.ipynb
+│
+├── main.py
+├── requirements.txt
+├── pyproject.toml
+├── uv.lock
+├── .gitignore
+├── .python-version
 └── README.md
-```
 
----
+🛠️ Technology Stack
 
-## 3. Running the Frontend
+Frontend
 
-This is a static site — no npm install, no build step.
+HTML5
 
-**Option A — VS Code Live Server (recommended)**
-1. Open the `nilamguru/` folder in VS Code.
-2. Install the "Live Server" extension if you don't have it.
-3. Right-click `index.html` → "Open with Live Server".
+CSS3
 
-**Option B — any static server**
-```bash
-cd nilamguru
-python -m http.server 5500
-# then open http://127.0.0.1:5500
-```
+JavaScript
 
-> Opening `index.html` directly via `file://` mostly works, but some browsers
-> restrict `fetch()` on `file://` — a local server is safer.
+Responsive Web Design
 
----
+Browser localStorage for current demo-only features
 
-## 4. Running the Backend
+Backend
 
-```bash
-cd your-fastapi-project
+Python
+
+FastAPI
+
+Uvicorn
+
+Pydantic
+
+CORS Middleware
+
+Machine Learning
+
+Scikit-learn
+
+NumPy
+
+Joblib
+
+Label Encoders
+
+Development & Deployment
+
+Git
+
+GitHub
+
+Render
+
+Vercel
+
+VS Code
+
+⚙️ Run the Backend Locally
+
+1. Clone the repository
+
+git clone https://github.com/naren-07-rd/NilamGuru.git
+cd NilamGuru
+
+2. Create and activate a virtual environment
+
+Windows PowerShell:
+
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+
+3. Install dependencies
+
+pip install -r requirements.txt
+
+4. Start FastAPI
+
 uvicorn main:app --reload
-```
 
-By default this serves at `http://127.0.0.1:8000`.
+The local API will be available at:
 
-### Enable CORS (required)
+http://127.0.0.1:8000
 
-Your FastAPI code did not show CORS middleware. Since the browser frontend
-runs on a different origin (e.g. `http://127.0.0.1:5500`) than FastAPI
-(`http://127.0.0.1:8000`), you must add this **without changing any ML/model
-logic**:
+Swagger documentation:
 
-```python
-from fastapi.middleware.cors import CORSMiddleware
+http://127.0.0.1:8000/docs
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],       # tighten this to your real frontend URL(s) in production
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-```
+🌐 Run the Frontend Locally
 
----
+The frontend is a static HTML/CSS/JavaScript application.
 
-## 5. Backend URL Configuration
+From:
 
-Everything reads a single constant in `js/config.js`:
+frontend/nilamguru
 
-```javascript
-const API_BASE_URL = "http://127.0.0.1:8000";
-```
+you can run a simple local HTTP server with Python:
 
-Change this **one line** to your deployed FastAPI URL when you go live —
-nothing else in the codebase hardcodes the backend URL.
+python -m http.server 5500
 
-Note: plain static HTML cannot read a `.env` file directly (there's no build
-step to inject it). `js/config.js` is the intended equivalent — edit it by
-hand, or generate it from your `.env` with a small script if you want that
-workflow later.
+Then open:
 
----
+http://127.0.0.1:5500
 
-## 6. Real API Integration (confirmed, working)
+The frontend API configuration is centralized in:
 
-| Endpoint | Method | Purpose |
-|---|---|---|
-| `/` | GET | Health check |
-| `/predict/crop` | POST | Crop ML prediction |
-| `/predict/fertilizer` | POST | Fertilizer ML prediction |
+frontend/nilamguru/js/config.js
 
-### Crop prediction
+The deployed configuration points the frontend to the Render FastAPI backend.
 
-Request:
-```json
-{ "N": 90, "P": 42, "K": 43, "temperature": 25.5, "humidity": 82, "ph": 6.5, "rainfall": 200 }
-```
-Response:
-```json
-{ "recommended_crop": "rice" }
-```
+🔗 Frontend ↔ Backend Integration
 
-### Fertilizer prediction
+The frontend keeps the backend URL in one place:
 
-Request:
-```json
-{
-  "temperature": 28, "humidity": 60, "moisture": 40,
-  "soil_type": "Sandy", "crop_type": "Maize",
-  "nitrogen": 12, "potassium": 10, "phosphorous": 8
-}
-```
-Response:
-```json
-{ "recommended_fertilizer": "Urea" }
-```
+const API_BASE_URL = "https://nilamguru.onrender.com";
 
-`soil_type` and `crop_type` are sent as **strings** — FastAPI's encoders
-handle the conversion to whatever the model expects. Nothing is encoded in
-the browser.
+The real ML endpoints are:
 
-The dropdown option lists for Soil Type and Crop Type live in `js/config.js`
-(`SOIL_TYPES`, `CROP_TYPES`) — they're placeholders until you confirm the
-exact categories your encoders were trained on. Update that one array and
-every page picks it up automatically.
+/predict/crop
+/predict/fertilizer
 
-A small floating **backend status badge** (🟢/🔴) is shown on ML pages —
-it pings `GET /` so you can immediately tell whether an issue is frontend or
-FastAPI.
+This allows the frontend deployed on Vercel to communicate with the FastAPI backend deployed on Render.
 
----
+📦 Deployment
 
-## 7. Authentication — currently DEMO MODE
+Backend — Render
 
-⚠️ **The FastAPI backend you provided has no authentication endpoints.**
+The FastAPI backend is deployed from the repository root.
 
-To keep the app fully clickable, `js/auth.js` + the relevant parts of
-`js/api.js` implement a clearly-labeled **demo/localStorage session**:
-register, login, role selection, and logout all work, but no real account is
-created on any server, and **no password is ever sent anywhere** — it's only
-compared locally against what's in `localStorage`.
+Build Command:
 
-When you build real auth endpoints, replace the bodies of `loginUser()`,
-`registerUser()`, and `verifyOTP()` in `js/api.js` with real `apiRequest()`
-calls — the function signatures used across the app won't need to change.
+pip install -r requirements.txt
 
----
+Start Command:
 
-## 8. Features Currently Backed by Demo Data (⚠️ BACKEND REQUIRED)
+uvicorn main:app --host 0.0.0.0 --port $PORT
 
-These are fully interactive in the UI (search, filter, add, edit, delete,
-reply, mark as read, etc.) but persist to `localStorage`, not FastAPI, and
-every relevant page shows a "⚠️ Backend integration pending" banner:
+The ML models are stored in the repository's models/ directory and loaded using paths relative to main.py.
 
-- Marketplace / product listings
-- Farmer & seller enquiries
-- Notifications
-- Farmer & seller profiles
-- Farmer activity history (enquiries portion; crop/fertilizer history is
-  logged locally from real ML calls)
+Frontend — Vercel
 
-Every demo function lives in `js/api.js` under the `DEMO SERVICES` section
-and is documented with the real endpoint it should eventually call.
+The Vercel project uses:
 
----
+frontend/nilamguru
 
-## 9. ML Prediction Flow
+as its root directory.
 
-```
-HTML form → JavaScript validation → Fetch API → FastAPI → existing ML model
-→ JSON response → result card rendered in the browser
-```
+The frontend is deployed as a static web application.
 
-No prediction logic, encoding, or model behavior is duplicated in
-JavaScript — the browser only sends the raw values the user entered.
+🔐 Current Backend Scope
 
----
+The current FastAPI backend provides the two ML prediction services and a health-check endpoint.
 
-## 10. Troubleshooting
+The following frontend features are currently demo/localStorage based:
 
-| Symptom | Likely cause | Fix |
-|---|---|---|
-| "Unable to connect to NilamGuru server" toast | FastAPI isn't running, or wrong URL | `uvicorn main:app --reload`, check `API_BASE_URL` in `js/config.js` |
-| Browser console: CORS error | CORS middleware missing on FastAPI | Add the CORS snippet in section 4 |
-| 🔴 Backend Offline badge | Same as above | Confirm `http://127.0.0.1:8000/` returns `{"message": "Nilamguru API is running"}` |
-| "This value is not supported by the current ML model" | soil_type/crop_type sent isn't a category your encoder was trained on | Update `SOIL_TYPES`/`CROP_TYPES` in `js/config.js` to match your encoder exactly |
-| 422 Unprocessable Entity | A field is missing or the wrong type | Check the exact field names in section 6 — they must match exactly |
-| Nothing happens after Login/Register | You're testing "Login" without registering first (demo mode has no seed accounts) | Register once, then log in with the same email/phone + password |
-| Marketplace/listings/enquiries "reset" | Demo data lives in this browser's `localStorage` | Expected in demo mode — will persist server-side once real APIs exist |
+Authentication
 
----
+Marketplace data
 
-## 11. Deployment Notes
+Product listings
 
-1. Deploy FastAPI (e.g. Render, Railway, a VM with Gunicorn+Uvicorn) and note
-   its public HTTPS URL.
-2. Update `API_BASE_URL` in `js/config.js` to that URL.
-3. Update FastAPI's CORS `allow_origins` to your real frontend domain instead
-   of `"*"`.
-4. Deploy the static frontend anywhere that serves static files (Netlify,
-   Vercel, GitHub Pages, S3 + CloudFront, Nginx, etc.) — no build step needed.
+Enquiries
+
+Notifications
+
+Profile data
+
+Activity history
+
+These features are intentionally kept separate from the current ML API until their corresponding backend services and database layer are implemented.
+
+🗄️ Future Development
+
+Planned improvements include:
+
+Persistent database integration
+
+Real user authentication
+
+Secure password handling
+
+User profiles stored in the backend
+
+Persistent marketplace listings
+
+Real product and enquiry management
+
+Notification backend
+
+Farmer prediction history
+
+Seller dashboard data
+
+Improved API validation and error handling
+
+Production CORS configuration
+
+Model monitoring and versioning
+
+Cloud database integration
+
+Better agricultural insights and recommendations
+
+🔒 Security Notes
+
+For production expansion, the following should be implemented:
+
+Restrict CORS to the deployed frontend domain.
+
+Never store plain-text passwords.
+
+Move secrets and credentials to environment variables.
+
+Add authentication and authorization to protected APIs.
+
+Validate and sanitize user input.
+
+Use a proper database instead of browser localStorage for persistent user data.
+
+Add logging and monitoring for production APIs.
+
+📚 Project Learning
+
+This project demonstrates an end-to-end Machine Learning application workflow:
+
+Dataset
+   ↓
+Data Preparation
+   ↓
+Model Training
+   ↓
+Encoding / Preprocessing
+   ↓
+Model Serialization
+   ↓
+FastAPI API
+   ↓
+Frontend Integration
+   ↓
+GitHub
+   ↓
+Render + Vercel
+   ↓
+Live ML Web Application
+
+👨‍💻 Author
+
+NARENTHIRANATH AS
+
+Computer Science Engineering Student
+Machine Learning • Artificial Intelligence • Software Development
+
+LinkedIn:
+https://www.linkedin.com/in/narenthiranath-as-6a5356323
+
+GitHub:
+https://github.com/naren-07-rd
+
+⭐ Acknowledgement
+
+NilamGuru was developed as a learning and project initiative focused on applying Machine Learning and full-stack development to an agriculture-oriented real-world problem.
+
+If you find the project useful or interesting, consider giving the repository a ⭐ on GitHub.
+
+📄 License
+
+This project currently does not specify a license. Add an appropriate open-source license if you decide to make the project available for reuse or distribution.

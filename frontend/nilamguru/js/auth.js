@@ -88,5 +88,5 @@ function resolvePath(rootRelativePath) {
         ? window.location.pathname.split("/pages/")[1].split("/").length - 1
         : -1; // -1 => at project root (index.html)
     const prefix = depth <= 0 ? "" : "../".repeat(depth);
-    return prefix + rootRelativePath;
+    return "/" + prefix + rootRelativePath;
 }

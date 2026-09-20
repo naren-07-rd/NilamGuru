@@ -1,6 +1,9 @@
 fastapi
 uvicorn
+sqlalchemy
+psycopg[binary]
+python-dotenv
+argon2-cffi
+pydantic[email]
 joblib
-pydantic
 scikit-learn
-numpy

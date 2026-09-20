@@ -1,27 +1,13 @@
-/* ==========================================================================
-   NILAMGURU — config.js
-   Single source of truth for backend URL + shared configuration.
-   Change API_BASE_URL here ONLY — never hardcode the URL in other files.
-   ========================================================================== */
 
-// 👉 Change this to your deployed FastAPI URL when you go live.
 const API_BASE_URL = "https://nilamguru.onrender.com";
 
-// ---------------------------------------------------------------------------
-// REAL backend endpoints (confirmed against the FastAPI code you provided).
-// Do not rename these — they must match the backend exactly.
-// ---------------------------------------------------------------------------
+
 const ENDPOINTS = {
     HEALTH: "/",
     PREDICT_CROP: "/predict/crop",
     PREDICT_FERTILIZER: "/predict/fertilizer"
 };
 
-// ---------------------------------------------------------------------------
-// Features NOT YET backed by a real FastAPI endpoint.
-// Everything below runs on localStorage "demo mode" until real APIs exist.
-// Flip a flag to false the moment you wire up the real endpoint.
-// ---------------------------------------------------------------------------
 const DEMO_MODE = {
     auth: true,
     marketplace: true,

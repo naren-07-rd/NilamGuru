@@ -1,16 +1,171 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, HTTPException, Response, Cookie
 from fastapi.middleware.cors import CORSMiddleware
 import joblib
 from pathlib import Path
 from pydantic import BaseModel
 
+from sqlalchemy.orm import Session
+from database.connection import engine
+from database.models import User
+from schemas.auth import RegisterRequest, LoginRequest
+from services.auth_service import (
+    register_user,
+    login_user,
+    create_session,
+    get_user_from_session,
+    revoke_session,
+)
 
+from sqlalchemy.orm import sessionmaker
+
+
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
+
+
+def get_db():
+    db = SessionLocal()
+
+    try:
+        yield db
+    finally:
+        db.close()
 app = FastAPI(title="NilamGuru API")
+
+@app.post("/auth/register")
+def register(
+    data: RegisterRequest,
+    db: Session = Depends(get_db)
+):
+    try:
+        user = register_user(db, data)
+
+        return {
+            "message": "Registration successful",
+            "user": {
+                "id": user.id,
+                "name": user.name,
+                "email": user.email,
+                "role": user.role,
+                "is_verified": user.is_verified
+            }
+        }
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=400,
+            detail=str(error)
+        )
+
+@app.post("/auth/login")
+def login(
+    data: LoginRequest,
+    response: Response,
+    db: Session = Depends(get_db)
+):
+    try:
+        user = login_user(
+            db=db,
+            email=data.email,
+            password=data.password
+        )
+
+        session_token = create_session(
+            db=db,
+            user=user
+        )
+
+        response.set_cookie(
+            key="nilamguru_session",
+            value=session_token,
+            httponly=True,
+            secure=False,
+            samesite="lax",
+            max_age=7 * 24 * 60 * 60
+        )
+
+        return {
+            "message": "Login successful",
+            "user": {
+                "id": user.id,
+                "name": user.name,
+                "email": user.email,
+                "role": user.role,
+                "is_verified": user.is_verified
+            }
+        }
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=401,
+            detail=str(error)
+        )
+
+@app.get("/auth/me")
+def get_current_user(
+    nilamguru_session: str | None = Cookie(default=None),
+    db: Session = Depends(get_db)
+):
+    if not nilamguru_session:
+        raise HTTPException(
+            status_code=401,
+            detail="Not authenticated"
+        )
+
+    user = get_user_from_session(
+        db=db,
+        session_token=nilamguru_session
+    )
+
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired session"
+        )
+
+    return {
+        "id": user.id,
+        "name": user.name,
+        "email": user.email,
+        "role": user.role,
+        "is_verified": user.is_verified
+    }
+
+@app.post("/auth/logout")
+def logout(
+    response: Response,
+    nilamguru_session: str | None = Cookie(default=None),
+    db: Session = Depends(get_db)
+):
+    if nilamguru_session:
+        revoke_session(
+            db=db,
+            session_token=nilamguru_session
+        )
+
+    response.delete_cookie(
+        key="nilamguru_session"
+    )
+
+    return {
+        "message": "Logout successful"
+    }
+
+
+
 
 # CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+    "http://127.0.0.1:8080",
+    "http://localhost:8080",
+],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

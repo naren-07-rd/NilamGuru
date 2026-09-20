@@ -1,29 +1,15 @@
-/* ==========================================================================
-   NILAMGURU — api.js
-   ALL backend communication goes through this file.
-
-   REAL endpoints (confirmed from FastAPI):
-     GET  /                -> health check
-     POST /predict/crop    -> crop ML prediction
-     POST /predict/fertilizer -> fertilizer ML prediction
-
-   Everything else below `DEMO SERVICES` is NOT backed by a real API yet.
-   Those functions are clearly marked BACKEND REQUIRED and currently run
-   against localStorage so the UI is fully clickable. Swap their internals
-   for real apiRequest() calls the moment the endpoints exist — the
-   function signatures are designed to stay the same.
-   ========================================================================== */
-
 async function apiRequest(endpoint, options = {}) {
     let response;
     try {
-        response = await fetch(`${API_BASE_URL}${endpoint}`, {
-            ...options,
-            headers: {
-                "Content-Type": "application/json",
-                ...(options.headers || {})
-            }
-        });
+            response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                 ...options,
+                credentials: "include",
+
+                headers: {
+                     "Content-Type": "application/json",
+                    ...(options.headers || {})
+        }
+    });
     } catch (networkErr) {
         throw new Error(
             "Unable to connect to NilamGuru server. Please make sure FastAPI is running."
@@ -84,12 +70,6 @@ async function predictFertilizer(data) {
     });
 }
 
-/* ==========================================================================
-   DEMO SERVICES — BACKEND REQUIRED
-   These simulate a backend using localStorage so every button in the app
-   works end-to-end. Replace internals with real apiRequest() calls once
-   the corresponding FastAPI endpoints exist.
-   ========================================================================== */
 
 const DEMO_LATENCY = 450;
 const wait = (ms = DEMO_LATENCY) => new Promise((res) => setTimeout(res, ms));
@@ -108,24 +88,55 @@ function writeStore(key, value) {
 
 /* ----- Auth (BACKEND REQUIRED — demo/localStorage only) ----- */
 async function loginUser({ identifier, password }) {
-    await wait();
-    const users = readStore("nilamguru_users", []);
-    const user = users.find((u) => u.identifier === identifier);
-    if (!user || user.password !== password) {
-        throw new Error("Invalid credentials. (Demo mode: register first.)");
+    // Current backend authentication uses email.
+    if (!identifier || !identifier.includes("@")) {
+        throw new Error("Please enter a valid email address.");
     }
-    return { user: { name: user.name, identifier: user.identifier, role: user.role } };
+
+    const data = await apiRequest("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+            email: identifier,
+            password: password
+        })
+    });
+
+    return {
+        user: {
+            name: data.user.name,
+            identifier: data.user.email,
+            role: data.user.role,
+            id: data.user.id,
+            is_verified: data.user.is_verified
+        }
+    };
 }
 
 async function registerUser({ name, identifier, password, role }) {
-    await wait();
-    const users = readStore("nilamguru_users", []);
-    if (users.some((u) => u.identifier === identifier)) {
-        throw new Error("An account with this email/phone already exists.");
+    // The current backend registration schema expects email.
+    if (!identifier || !identifier.includes("@")) {
+        throw new Error("Please register using a valid email address.");
     }
-    users.push({ name, identifier, password, role: role || null });
-    writeStore("nilamguru_users", users);
-    return { user: { name, identifier, role: role || null } };
+
+    const data = await apiRequest("/auth/register", {
+        method: "POST",
+        body: JSON.stringify({
+            name: name,
+            email: identifier,
+            password: password
+        })
+    });
+
+    // Keep the existing frontend response format.
+    return {
+        user: {
+            name: data.user.name,
+            identifier: data.user.email,
+            role: data.user.role,
+            id: data.user.id,
+            is_verified: data.user.is_verified
+        }
+    };
 }
 
 async function verifyOTP(code) {

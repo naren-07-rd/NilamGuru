@@ -78,7 +78,7 @@
         setButtonLoading(btn, "Logging in...");
         try {
             const { user } = await loginUser({ identifier: identifierEl.value.trim(), password: passwordEl.value });
-            saveSession(user);
+        
             showToast("Login successful!", "success");
             setTimeout(() => {
                 if (!user.role) {

@@ -1,0 +1,16 @@
+{
+  "name": "nilamguru",
+  "version": "1.0.0",
+  "description": "NilamGuru is an agriculture technology platform combining **AI-powered crop & fertilizer recommendation** with an **agricultural marketplace**, built for two kinds of users:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "live-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

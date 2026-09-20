@@ -91,7 +91,7 @@
                 password: passwordEl.value,
                 role: null
             });
-            saveSession(user);
+            
             showToast("Account created!", "success");
             setTimeout(() => (window.location.href = "role-selection.html"), 500);
         } catch (err) {

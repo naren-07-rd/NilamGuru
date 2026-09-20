@@ -1,74 +1,88 @@
-/* ==========================================================================
-   NILAMGURU — auth.js
-   BACKEND REQUIRED: the FastAPI backend has no auth endpoints yet.
-   This file provides a clearly-labeled DEMO/localStorage session so the
-   rest of the app (protected pages, role-based nav, profile) is fully
-   functional. Swap saveSession()/getCurrentUser() internals for real
-   token handling once auth endpoints exist — never store real passwords
-   here or in localStorage.
-   ========================================================================== */
+let currentUser = null;
 
-const SESSION_KEY = "nilamguru_user";
+async function getCurrentUser() {
+    if (currentUser) {
+        return currentUser;
+    }
 
-function saveSession(user) {
-    // Demo only — do not store passwords or secrets here.
-    localStorage.setItem(SESSION_KEY, JSON.stringify(user));
-}
-
-function getCurrentUser() {
     try {
-        const raw = localStorage.getItem(SESSION_KEY);
-        return raw ? JSON.parse(raw) : null;
+        const data = await apiRequest("/auth/me", {
+            method: "GET"
+        });
+
+        currentUser = {
+            id: data.id,
+            name: data.name,
+            identifier: data.email,
+            email: data.email,
+            role: data.role,
+            is_verified: data.is_verified
+        };
+
+        return currentUser;
+
     } catch (_) {
+        currentUser = null;
         return null;
     }
 }
 
-function setUserRole(role) {
-    const user = getCurrentUser() || {};
-    user.role = role;
-    saveSession(user);
+async function setUserRole(role) {
+    console.warn(
+        "Role selection is not connected to the backend yet:",
+        role
+    );
 }
 
-function isLoggedIn() {
-    return !!getCurrentUser();
+async function isLoggedIn() {
+    const user = await getCurrentUser();
+    return !!user;
 }
+async function logoutUser() {
+    try {
+        await apiRequest("/auth/logout", {
+            method: "POST"
+        });
+    } catch (error) {
+        console.error("Logout error:", error);
+    }
 
-function logoutUser() {
-    localStorage.removeItem(SESSION_KEY);
+    currentUser = null;
+
     window.location.href = resolvePath("pages/login.html");
 }
 
-/**
- * Redirects to login if there's no session. Optionally enforces a role
- * and bounces to role-selection if the role is missing.
- * Call at the top of any protected dashboard page.
- */
-function requireAuth({ role } = {}) {
-    const user = getCurrentUser();
+
+async function requireAuth({ role } = {}) {
+
+    const user = await getCurrentUser();
+
     if (!user) {
         window.location.href = resolvePath("pages/login.html");
         return null;
     }
+
     if (role && user.role !== role) {
+
         if (!user.role) {
-            window.location.href = resolvePath("pages/role-selection.html");
-        } else {
-            // Logged-in user of the other role tried to open this page.
             window.location.href = resolvePath(
-                user.role === "vanigar" ? "pages/vanigar/dashboard.html" : "pages/uzhavali/home.html"
+                "pages/role-selection.html"
+            );
+        } else {
+            window.location.href = resolvePath(
+                user.role === "vanigar"
+                    ? "pages/vanigar/dashboard.html"
+                    : "pages/uzhavali/home.html"
             );
         }
+
         return null;
     }
+
     return user;
 }
 
-/**
- * Resolves an app-root-relative path (e.g. "pages/login.html") to a
- * correct relative URL no matter how deep the current page is nested.
- * Depth is inferred from how many "/pages/.../" segments deep we are.
- */
+
 function resolvePath(rootRelativePath) {
     const depth = window.location.pathname.split("/pages/")[1]
         ? window.location.pathname.split("/pages/")[1].split("/").length - 1
